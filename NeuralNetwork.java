@@ -1,71 +1,47 @@
-import java.util.Random;
+
+class neuron extends NeuralNetwork {
+    public double weight1 = 20;
+    private double weight2 = 20;
+    public double bias = -30;
+
+    public double compute(double input1, double input2){
+        double preActivation = (this.weight1 * input1) + (this.weight2 * input2) + bias;
+        double output = sigmoid(preActivation);
+        return output;
+    }
+}
 
 public class NeuralNetwork {
-    private double[][] weights;
-    private double[] biases;
-    private int[] layers;
-    private int numLayers;
+    neuron neuron;
 
-    public NeuralNetwork(int[] layers) {
-        this.layers = layers;
-        this.numLayers = layers.length;
-        this.weights = new double[numLayers - 1][];
-        this.biases = new double[numLayers - 1];
+    NeuralNetwork(){
 
-        Random random = new Random();
+    }
+    NeuralNetwork(neuron neuron){
+        this.neuron = neuron;
 
-        // Initialize weights and biases with random values
-        for (int i = 0; i < numLayers - 1; i++) {
-            weights[i] = new double[layers[i] * layers[i + 1]];
-            biases[i] = random.nextDouble() - 0.5;
-            for (int j = 0; j < weights[i].length; j++) {
-                weights[i][j] = random.nextDouble() - 0.5;
-            }
-        }
     }
 
-    private double sigmoid(double x) {
+    public double predict(double input1, double input2){
+        double neuron_output = neuron.compute(input1, input2);
+        return neuron_output;
+    }
+    double sigmoid(double x) {
         return 1 / (1 + Math.exp(-x));
     }
 
-    public double feedForward(double[] input) {
-        double[] activations = input.clone();
-
-        for (int i = 0; i < numLayers - 1; i++) {
-            double[] nextActivations = new double[layers[i + 1]];
-
-            for (int j = 0; j < layers[i + 1]; j++) {
-                double weightedSum = biases[i];
-
-                for (int k = 0; k < layers[i]; k++) {
-                    weightedSum += weights[i][j * layers[i] + k] * activations[k];
-                }
-
-                nextActivations[j] = sigmoid(weightedSum);
-            }
-
-            activations = nextActivations;
-        }
-
-        return activations[0]; // Assuming a single output node for the AND gate
-    }
-
     public static void main(String[] args) {
-        int[] layers = {2, 2, 1}; // 2 input nodes, 2 hidden nodes, 1 output node
-        NeuralNetwork network = new NeuralNetwork(layers);
+        neuron neuron = new neuron();
+       NeuralNetwork network = new NeuralNetwork(neuron);
 
         // Test inputs
-        double[][] testInputs = {
-                {0, 0},
-                {0, 1},
-                {1, 0},
-                {1, 1}
-        };
 
-        // Feed inputs to the network and print the results
-        for (double[] input : testInputs) {
-            double output = network.feedForward(input);
-            System.out.println("Input: [" + input[0] + ", " + input[1] + "] => Output: " + output);
-        }
+        System.out.println("Input is (1,1): "+ network.predict(1,1));
+        System.out.println("Input is (1,0): "+ network.predict(1,0));
+        System.out.println("Input is (0,0): "+ network.predict(0,0));
+        System.out.println("Input is (0,1): "+ network.predict(1,0));
+
+        // Feed inputs to the network and prdouble the results
+
     }
 }
