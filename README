@@ -1,3 +1,5 @@
 Question 1:
 a) How many hidden layers have you used?
+- One
 b) What are the weights and biases of each node?
+- One node: bias = -30, weight = 20 for each input
