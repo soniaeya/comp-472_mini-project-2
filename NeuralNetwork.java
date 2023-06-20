@@ -35,13 +35,10 @@ public class NeuralNetwork {
        NeuralNetwork network = new NeuralNetwork(neuron);
 
         // Test inputs
-
-        System.out.println("Input is (1,1): "+ network.predict(1,1));
-        System.out.println("Input is (1,0): "+ network.predict(1,0));
-        System.out.println("Input is (0,0): "+ network.predict(0,0));
-        System.out.println("Input is (0,1): "+ network.predict(1,0));
-
-        // Feed inputs to the network and prdouble the results
+        System.out.println("Input is (1,1): "+ Math.round(network.predict(1,1)));
+        System.out.println("Input is (1,0): "+ Math.round(network.predict(1,0)));
+        System.out.println("Input is (0,0): "+ Math.round(network.predict(0,0)));
+        System.out.println("Input is (0,1): "+ Math.round(network.predict(1,0)));
 
     }
 }
